@@ -2,86 +2,49 @@
 #include <Windows.h>
 //#include <windef.h>
 
+LRESULT CALLBACK FUCKtoFUCKProc(HWND, UINT, WPARAM, LPARAM);
 
 
-LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-
-
-int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
-    LPTSTR lpCmdLine, int nCmdShow)
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
+    LPSTR lpCmdLine, int nCmdShow)
 {
 
-    // Register the window class.
-    const wchar_t CLASS_NAME[] = L"Sample Window Class";
+    MessageBox(NULL, L"Hi SHIT FUCK YOU I HATE YOU MOTHERFUCKONG WOTLD!", L"Hello from message FUCKION G BOX", MB_OK);
 
-    WNDCLASS wc = { };
 
-    wc.lpfnWndProc = WindowProc;
-    wc.hInstance = hInstance;
-    wc.lpszClassName = CLASS_NAME;
+    HWND hMainWnd;
+    const wchar_t* szClassName = L"MyFUCKINGwindowClassMOTHERFUCKER";
 
-    RegisterClass(&wc);
+    MSG msg;
+    WNDCLASSEX wc;
 
-    // Create the window.
+    // FILLING SHIT of MOTHERFUCKING WINDOW BITCH
 
-    HWND hwnd = CreateWindowEx(
-        0,                              // Optional window styles.
-        CLASS_NAME,                     // Window class
-        L"Learn to Program Windows",    // Window text
-        WS_OVERLAPPEDWINDOW,            // Window style
+    wc.cbSize         = sizeof(wc);
+    wc.style          = CS_HREDRAW | CS_VREDRAW;
+    wc.lpfnWndProc    = FUCKtoFUCKProc;
+    wc.cbClsExtra     = 0;
+    wc.cbWndExtra     = 0;
+    wc.hInstance      = hInstance;
+    wc.hIcon          = LoadIcon(NULL, IDI_QUESTION);
+    wc.hCursor        = LoadCursor(NULL, IDC_HAND);
+    wc.hbrBackground  = (HBRUSH)(GetStockObject(BLACK_BRUSH));
+    wc.lpszMenuName   = NULL;
+    wc.lpszClassName  = szClassName;
+    wc.hIconSm        = LoadIcon(NULL, IDI_APPLICATION);
 
-        // Size and position
-        CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+    // Registrating motherfuckiong wnd class
 
-        NULL,       // Parent window    
-        NULL,       // Menu
-        hInstance,  // Instance handle
-        NULL        // Additional application data
-    );
-
-    if (hwnd == NULL)
+    if (!RegisterClassEx(&wc))
     {
+        MessageBox(NULL, L"Can't fucking register your shitty window class... sorry", L"Shit your pants", MB_OK);
         return 0;
     }
 
-    ShowWindow(hwnd, nCmdShow);
 
-    // Run the message loop.
-
-    MSG msg = { };
-    while (GetMessage(&msg, NULL, 0, 0) > 0)
-    {
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
-    }
+    hMainWnd = CreateWindow();
 
 
 
     return 0;
-}
-
-
-LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
-{
-    switch (uMsg)
-    {
-    case WM_DESTROY:
-        PostQuitMessage(0);
-        return 0;
-
-    case WM_PAINT:
-    {
-        PAINTSTRUCT ps;
-        HDC hdc = BeginPaint(hwnd, &ps);
-
-        // All painting occurs here, between BeginPaint and EndPaint.
-
-        FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
-
-        EndPaint(hwnd, &ps);
-    }
-    return 0;
-
-    }
-    return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
